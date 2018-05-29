@@ -23,9 +23,23 @@ def FindKeyword():
 
     for item in itemElements:
         title = item.find("title").text
+        link = item.find("link").text
+        image= item.find("image").text
+        subtitle= item.find("subtitle").text
+        pubDate= item.find("pubDate").text
+        director= item.find("director").text
+        actor= item.find("actor").text
+        userRating= item.find("userRating").text
 
         print("=========================================")
-        print("title : ", title)
+        print("title: ", title)
+        print("link: ", link)
+        print("image url: ", image)
+        print("sub title: ", subtitle)
+        print("제작년도: ", pubDate)
+        print("영화 감독: ", director)
+        print("출연 배우: ", actor)
+        print("유저 평점: ", userRating)
         print("=========================================")
 
 FindKeyword()
