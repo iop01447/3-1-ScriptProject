@@ -2,12 +2,17 @@ from tkinter import *
 from tkinter import font
 import tkinter.messagebox
 g_Tk = Tk()
-g_Tk.geometry("400x600+750+200")
+g_Tk.geometry("900x600+100+100") # width height x y
+# 400 400 100   // 300
+#               // 300
 DataList = []
 
+myFont = 'KoPub돋움체 Medium'
+
+# weight='bold'
 def InitTopText():
-    TempFont = font.Font(g_Tk, size=20, weight='bold', family = 'Consolas')
-    MainText = Label(g_Tk, font = TempFont, text="[서울시 근린시설 검색 App]")
+    TempFont = font.Font(g_Tk, size=20, family=myFont)
+    MainText = Label(g_Tk, font=TempFont, text="영화 검색 APP")
     MainText.pack()
     MainText.place(x=20)
 
