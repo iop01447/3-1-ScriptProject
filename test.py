@@ -39,7 +39,6 @@ def InitSearchButton():
 #검색 버튼 누른 후 동작
 def SearchButtonAction():
     global GenreComboBox
-    global GenreStr
 
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
@@ -47,17 +46,18 @@ def SearchButtonAction():
 
     SearchKeyword()
 
-    print(GenreStr.get())
+#    print(GenreStr.get())
 
     RenderText.configure(state='disabled')
 
 # 검색
 def SearchKeyword():
-    global keyword, inputGenre, inputCountry
+    global keyword, GenreStr, GenreDic
+    global CountryStr, CountryDic
     itemCnt = 1
 
     keyword = str(InputLabel.get())
-    itemElements = test_internet.FindKeyword(keyword, inputGenre, inputCountry)
+    itemElements = test_internet.FindKeyword(keyword, GenreDic[GenreStr.get()], CountryDic[CountryStr.get()])
     for item in itemElements:
         if item.find("title") != None:
             title = item.find("title").text
@@ -71,10 +71,11 @@ def SearchKeyword():
 def InitGenreComboBox():
     global GenreComboBox
     global GenreStr
+    global GenreDic
 
     TempFont = font.Font(g_Tk, size=15, family=myFont)
     GenreStr = StringVar()
-    GenreComboBox = ttk.Combobox(g_Tk, font=TempFont, textvariable=GenreStr)
+    GenreComboBox = ttk.Combobox(g_Tk, font=TempFont, textvariable=GenreStr, state='readonly')
     GenreComboBox['values']=('장르','드라마', '판타지', '서부', '공포', '로맨스',
                              '모험', '스릴러', '느와르', '컬트', '다큐멘터리',
                              '코미디', '가족', '미스터리', '전쟁',
@@ -82,19 +83,30 @@ def InitGenreComboBox():
                              '액션', '무협', '에로', '서스펜스', '서사',
                              '블랙코미디', '실험', '영화카툰', '영화음악',
                              '영화패러디포스터')
+
+    GenreDic = {}
+    for i, value in enumerate(GenreComboBox['values']):
+        GenreDic[value] = i
+
     GenreComboBox.grid(row=2,column=0,columnspan=2)
     GenreComboBox.current(0)
+
 
 # 국가코드 ↕
 def InitCountryComboBox():
     global CountryComboBox
     global CountryStr
+    global CountryDic
 
     TempFont = font.Font(g_Tk, size=15, family=myFont)
     CountryStr = StringVar()
-    CountryComboBox = ttk.Combobox(g_Tk, font=TempFont, textvariable=CountryStr)
+    CountryComboBox = ttk.Combobox(g_Tk, font=TempFont, textvariable=CountryStr, state='readonly')
     CountryComboBox['values']=('국가','한국', '일본', '미국', '홍콩', '영국',
                              '프랑스', '기타')
+
+    CountryDic = {'국가':'','한국':'KR', '일본':'JP', '미국':'US',
+                  '홍콩':'HK', '영국':'GB','프랑스':'FR', '기타':'ETC'}
+
     CountryComboBox.grid(row=2,column=2,columnspan=2)
     CountryComboBox.current(0)
 
