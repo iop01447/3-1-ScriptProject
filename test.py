@@ -35,14 +35,15 @@ def InitTopText():
 def InitInputLabel():
     global InputLabel
     TempFont = font.Font(g_Tk, size=15, family=myFont)
-    InputLabel = Entry(g_Tk, font=TempFont, width=26, borderwidth=12, relief='flat')
+    InputLabel = Entry(g_Tk, font=TempFont, width=26, borderwidth=8, relief='flat')
     InputLabel.grid(row=1,column=0,columnspan=3)
 
 # 검색 버튼
 def InitSearchButton():
-    TempFont = font.Font(g_Tk, size=12, family=myFont)
+    TempFont = font.Font(g_Tk, size=15, family=myFont)
     SearchButton = Button(g_Tk, font=TempFont, text="검색", command=SearchButtonAction,
-                          background='#00C73C',relief='flat')
+                          background='#00C73C',relief='flat', fg='white',
+                          width=5)
     SearchButton.grid(row=1,column=3)
 
 def SearchButtonAction():
@@ -121,12 +122,15 @@ def InitSearchListBox():
 
     TempFont = font.Font(g_Tk, size=15, family=myFont)
     SearchListBox = ttk.Combobox(g_Tk, font=TempFont)
-
-    SearchListBox.insert(1, "도서관")
-    SearchListBox.insert(2, "모범음식점")
-    SearchListBox.insert(3, "마트")
-    SearchListBox.insert(4, "문화시설")
+    SearchListBox['values']=('드라마', '판타지', '서부', '공포', '로맨스',
+                             '모험', '스릴러', '느와르', '컬트', '다큐멘터리',
+                             '코미디', '가족', '미스터리', '전쟁',
+                             '애니메이션', '범죄', '뮤지털', 'SF',
+                             '액션', '무협', '에로', '서스펜스', '서사',
+                             '블랙코미디', '실험', '영화카툰', '영화음악',
+                             '영화패러디포스터')
     SearchListBox.grid(row=2,column=0,columnspan=2)
+    SearchListBox.current(0)
 
 # 리스트 창
 def InitRenderText():
