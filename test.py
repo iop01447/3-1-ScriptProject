@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import font
 import tkinter.messagebox
+import test_internet
 g_Tk = Tk()
 g_Tk.geometry("900x600+100+100") # width height x y
 # 400 400 100   // 300
@@ -8,6 +9,19 @@ g_Tk.geometry("900x600+100+100") # width height x y
 DataList = []
 
 myFont = 'KoPub돋움체 Medium'
+
+# 이런 식으로 쓰면 되지 않을까 .. #
+inputGenre = 5
+inputCountry = 'KR'
+itemElements = test_internet.FindKeyword(inputGenre, inputCountry)
+for item in itemElements:
+    title = item.find("title").text
+    link = item.find("link").text
+    print("=========================================")
+    print("title: ", title)
+    print("link: ", link)
+    print("=========================================")
+# 이런 식으로 쓰면 되지 않을까 .. #
 
 # weight='bold'
 def InitTopText():
