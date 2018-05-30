@@ -141,7 +141,7 @@ def InitRenderText():
 
     TempFont = font.Font(g_Tk, size=10, family=myFont)
     RenderText = Text(g_Tk, width=49,height=27,font=TempFont,
-                      borderwidth=12, relief='groove',
+                      borderwidth=12, relief='flat',
                       yscrollcommand=RenderTextScrollbar.set)
     RenderText.grid(row=3,column=0,rowspan=6,columnspan=4)
     RenderTextScrollbar.config(command=RenderText.yview)
