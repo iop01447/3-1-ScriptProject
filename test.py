@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import font
-import tkinter.messagebox
+from tkinter import ttk
+from tkinter import messagebox
 import test_internet
 g_Tk = Tk()
 g_Tk.geometry("900x600+100+100") # width height x y
@@ -9,58 +10,38 @@ g_Tk.geometry("900x600+100+100") # width height x y
 DataList = []
 
 myFont = 'KoPub돋움체 Medium'
+#
+# # 이런 식으로 쓰면 되지 않을까 .. #
+# inputGenre = 5
+# inputCountry = 'KR'
+# itemElements = test_internet.FindKeyword(inputGenre, inputCountry)
+# for item in itemElements:
+#     title = item.find("title").text
+#     link = item.find("link").text
+#     print("=========================================")
+#     print("title: ", title)
+#     print("link: ", link)
+#     print("=========================================")
+# # 이런 식으로 쓰면 되지 않을까 .. #
 
-# 이런 식으로 쓰면 되지 않을까 .. #
-inputGenre = 5
-inputCountry = 'KR'
-itemElements = test_internet.FindKeyword(inputGenre, inputCountry)
-for item in itemElements:
-    title = item.find("title").text
-    link = item.find("link").text
-    print("=========================================")
-    print("title: ", title)
-    print("link: ", link)
-    print("=========================================")
-# 이런 식으로 쓰면 되지 않을까 .. #
-
-# weight='bold'
+# 영화 검색 앱
 def InitTopText():
     TempFont = font.Font(g_Tk, size=20, family=myFont)
-    MainText = Label(g_Tk, font=TempFont, text="영화 검색 APP")
-    MainText.pack()
-    MainText.place(x=20)
+    MainText = Label(g_Tk, font=TempFont, text="영화 검색 APP", relief='flat', borderwidth=4)
+    MainText.grid(row=0,column=0,columnspan=4)
 
-def InitSearchListBox():
-    global SearchListBox
-    ListBoxScrollbar = Scrollbar(g_Tk)
-    ListBoxScrollbar.pack()
-    ListBoxScrollbar.place(x=150, y=50)
-
-    TempFont = font.Font(g_Tk, size=15, weight='bold', family='Consolas')
-    SearchListBox = Listbox(g_Tk, font=TempFont, activestyle='none',
-                            width=10, height=1, borderwidth=12, relief='ridge',
-                            yscrollcommand=ListBoxScrollbar.set)
-
-    SearchListBox.insert(1, "도서관")
-    SearchListBox.insert(2, "모범음식점")
-    SearchListBox.insert(3, "마트")
-    SearchListBox.insert(4, "문화시설")
-    SearchListBox.pack()
-    SearchListBox.place(x=10, y=50)
-    ListBoxScrollbar.config(command=SearchListBox.yview)
-
+# 검색 창
 def InitInputLabel():
     global InputLabel
-    TempFont = font.Font(g_Tk, size=15, weight='bold', family = 'Consolas')
-    InputLabel = Entry(g_Tk, font = TempFont, width = 26, borderwidth = 12, relief = 'ridge')
-    InputLabel.pack()
-    InputLabel.place(x=10, y=105)
+    TempFont = font.Font(g_Tk, size=15, family=myFont)
+    InputLabel = Entry(g_Tk, font=TempFont, width=26, borderwidth=12, relief='flat')
+    InputLabel.grid(row=1,column=0,columnspan=3)
 
 def InitSearchButton():
-    TempFont = font.Font(g_Tk, size=12, weight='bold', family = 'Consolas')
-    SearchButton = Button(g_Tk, font = TempFont, text="검색",  command=SearchButtonAction)
-    SearchButton.pack()
-    SearchButton.place(x=330, y=110)
+    TempFont = font.Font(g_Tk, size=12, family=myFont)
+    SearchButton = Button(g_Tk, font=TempFont, text="검색", command=SearchButtonAction,
+                          background='#00C73C', relief='flat')
+    SearchButton.grid(row=1, column=3)
 
 def SearchButtonAction():
     global SearchListBox
@@ -132,18 +113,30 @@ def SearchLibrary():
                 RenderText.insert(INSERT, DataList[i][2])
                 RenderText.insert(INSERT, "\n\n")
 
+def InitSearchListBox():
+    global SearchListBox
+
+    TempFont = font.Font(g_Tk, size=15, family=myFont)
+    SearchListBox = ttk.Combobox(g_Tk)
+
+    SearchListBox.insert(1, "도서관")
+    SearchListBox.insert(2, "모범음식점")
+    SearchListBox.insert(3, "마트")
+    SearchListBox.insert(4, "문화시설")
+    SearchListBox.grid(row=2,column=0,columnspan=2)
+
 def InitRenderText():
     global RenderText
 
     RenderTextScrollbar = Scrollbar(g_Tk)
-    RenderTextScrollbar.pack()
-    RenderTextScrollbar.place(x=375, y=200)
-    TempFont = font.Font(g_Tk, size=10, family='Consolas')
-    RenderText = Text(g_Tk, width=49, height=27, borderwidth=12, relief='ridge', yscrollcommand=RenderTextScrollbar.set)
-    RenderText.pack()
-    RenderText.place(x=10, y=215)
+    RenderTextScrollbar.grid(row=3,column=3)
+
+    TempFont = font.Font(g_Tk, size=10, family=myFont)
+    RenderText = Text(g_Tk, width=49, height=27, borderwidth=12, relief='groove',
+                      yscrollcommand=RenderTextScrollbar.set)
+    RenderText.grid(row=3,column=0,rowspan=6,columnspan=4)
     RenderTextScrollbar.config(command=RenderText.yview)
-    RenderTextScrollbar.pack(side=RIGHT, fill=BOTH)
+
     RenderText.configure(state='disabled')
 
 #…
