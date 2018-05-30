@@ -4,7 +4,7 @@ from tkinter import ttk
 from tkinter import messagebox
 import test_internet
 g_Tk = Tk()
-g_Tk.geometry("900x600+100+100") # width height x y
+#g_Tk.geometry("900x600+100+100") # width height x y
 # 400 400 100   // 300
 #               // 300
 DataList = []
@@ -17,16 +17,16 @@ inputCountry = ''
 
 # 타이틀
 def InitTopText():
-    TempFont = font.Font(g_Tk, size=20, family=myFont)
+    TempFont = font.Font(g_Tk, size=18, family=myFont)
     MainText = Label(g_Tk, font=TempFont, text="영화 검색 APP",
-                     relief='flat',borderwidth=4)
+                     relief='flat')
     MainText.grid(row=0,column=0,columnspan=4)
 
 # 검색 입력창
 def InitInputLabel():
     global InputLabel
     TempFont = font.Font(g_Tk, size=15, family=myFont)
-    InputLabel = Entry(g_Tk, font=TempFont, width=26, borderwidth=8, relief='flat')
+    InputLabel = Entry(g_Tk, font=TempFont, relief='flat', width=37, borderwidth=8)
     InputLabel.grid(row=1,column=0,columnspan=3)
 
 # 검색 버튼
@@ -83,6 +83,19 @@ def InitGenreComboBox():
     GenreComboBox.grid(row=2,column=0,columnspan=2)
     GenreComboBox.current(0)
 
+# 국가코드 ↕
+def InitCountryComboBox():
+    global CountryComboBox
+    global CountryStr
+
+    TempFont = font.Font(g_Tk, size=15, family=myFont)
+    CountryStr = StringVar()
+    CountryComboBox = ttk.Combobox(g_Tk, font=TempFont, textvariable=CountryStr)
+    CountryComboBox['values']=('한국', '일본', '미국', '홍콩', '영국',
+                             '프랑스', '기타')
+    CountryComboBox.grid(row=2,column=2,columnspan=2)
+    CountryComboBox.current(0)
+
 # 리스트 창
 def InitRenderText():
     global RenderText
@@ -91,8 +104,8 @@ def InitRenderText():
     RenderTextScrollbar.grid(row=3,column=3)
 
     TempFont = font.Font(g_Tk, size=10, family=myFont)
-    RenderText = Text(g_Tk, width=49,height=27,font=TempFont,
-                      borderwidth=12, relief='flat',
+    RenderText = Text(g_Tk,font=TempFont, width=70, #height=27 borderwidth=12,
+                      relief='flat',
                       yscrollcommand=RenderTextScrollbar.set)
     RenderText.grid(row=3,column=0,rowspan=6,columnspan=4)
     RenderTextScrollbar.config(command=RenderText.yview)
@@ -100,9 +113,10 @@ def InitRenderText():
 
 #…
 InitTopText()
-InitGenreComboBox()
 InitInputLabel()
 InitSearchButton()
+InitGenreComboBox()
+InitCountryComboBox()
 InitRenderText()
 #InitSendEmailButton()
 #InitSortListBox()
