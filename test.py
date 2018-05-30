@@ -73,7 +73,7 @@ def InitGenreComboBox():
     TempFont = font.Font(g_Tk, size=15, family=myFont)
     GenreStr = StringVar()
     GenreComboBox = ttk.Combobox(g_Tk, font=TempFont, textvariable=GenreStr)
-    GenreComboBox['values']=('드라마', '판타지', '서부', '공포', '로맨스',
+    GenreComboBox['values']=('장르','드라마', '판타지', '서부', '공포', '로맨스',
                              '모험', '스릴러', '느와르', '컬트', '다큐멘터리',
                              '코미디', '가족', '미스터리', '전쟁',
                              '애니메이션', '범죄', '뮤지털', 'SF',
@@ -91,7 +91,7 @@ def InitCountryComboBox():
     TempFont = font.Font(g_Tk, size=15, family=myFont)
     CountryStr = StringVar()
     CountryComboBox = ttk.Combobox(g_Tk, font=TempFont, textvariable=CountryStr)
-    CountryComboBox['values']=('한국', '일본', '미국', '홍콩', '영국',
+    CountryComboBox['values']=('국가','한국', '일본', '미국', '홍콩', '영국',
                              '프랑스', '기타')
     CountryComboBox.grid(row=2,column=2,columnspan=2)
     CountryComboBox.current(0)
