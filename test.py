@@ -42,7 +42,6 @@ def SearchButtonAction():
 
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
-    iSearchIndex = GenreComboBox.curselection()[0]
     SearchKeyword()
 
     RenderText.configure(state='disabled')
