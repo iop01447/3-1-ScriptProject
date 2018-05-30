@@ -59,25 +59,40 @@ def SearchButtonAction():
 
 # 검색
 def SearchKeyword():
-    global keyword, GenreStr, GenreDic
+    global keyword, GenreStr, GenreDic, RenderList
     global CountryStr, CountryDic
     itemCnt = 1
+    RenderList = []
 
     keyword = str(InputLabel.get())
     itemElements = test_internet.FindKeyword(keyword, GenreDic[GenreStr.get()], CountryDic[CountryStr.get()])
     for item in itemElements:
         if item.find("title") != None:
             title = item.find("title").text
+            title = title.replace("<b>", "")
+            title = title.replace("</b>", "")
             RederListBox.insert(itemCnt, title)
             itemCnt += 1
+            RenderList.append(title)
+
 
 # 검색 상세 정보
 def ShowDetail():
     global RederListBox, itemElements
     if RederListBox.curselection() != None:
-        key = RederListBox.curselection()[0]
-    #RenderText.insert(INSERT, title)
-    #RenderText.insert(INSERT, "\n")
+        key = RenderList[RederListBox.curselection()[0]]
+    itemElements = test_internet.FindKeyword(key, inputGenre, inputCountry)
+    for item in itemElements:
+        title = item.find("title").text
+        title = title.replace("<b>", "")
+        title = title.replace("</b>", "")
+        if title == key:
+            RenderText.insert(INSERT, "title: ")
+            RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, "\n")
+            print(title)
+            break
+
 
 # 장르 ↕
 def InitGenreComboBox():
