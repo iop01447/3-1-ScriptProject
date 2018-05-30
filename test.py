@@ -36,6 +36,13 @@ def InitSearchButton():
                           background='#00C73C',relief='flat', fg='white', width=5)
     SearchButton.grid(row=1,column=3)
 
+#상세정보 버튼
+def InitDetailButton():
+    TempFont = font.Font(g_Tk, size=11, family=myFont)
+    DetailButton = Button(g_Tk, font=TempFont, text="DETAIL", command=ShowDetail,
+                          relief='flat', background="white", width=10)
+    DetailButton.grid(row=2,column=4)
+
 #검색 버튼 누른 후 동작
 def SearchButtonAction():
     global GenreComboBox
@@ -52,20 +59,40 @@ def SearchButtonAction():
 
 # 검색
 def SearchKeyword():
-    global keyword, GenreStr, GenreDic
+    global keyword, GenreStr, GenreDic, RenderList
     global CountryStr, CountryDic
     itemCnt = 1
+    RenderList = []
 
     keyword = str(InputLabel.get())
     itemElements = test_internet.FindKeyword(keyword, GenreDic[GenreStr.get()], CountryDic[CountryStr.get()])
     for item in itemElements:
         if item.find("title") != None:
             title = item.find("title").text
-            #RenderText.insert(INSERT, title)
-            #RenderText.insert(INSERT, "\n")
+            title = title.replace("<b>", "")
+            title = title.replace("</b>", "")
             RederListBox.insert(itemCnt, title)
             itemCnt += 1
+            RenderList.append(title)
+
+
+# 검색 상세 정보
+def ShowDetail():
+    global RederListBox, itemElements
+    if RederListBox.curselection() != None:
+        key = RenderList[RederListBox.curselection()[0]]
+    itemElements = test_internet.FindKeyword(key, inputGenre, inputCountry)
+    for item in itemElements:
+        title = item.find("title").text
+        title = title.replace("<b>", "")
+        title = title.replace("</b>", "")
+        if title == key:
+            RenderText.insert(INSERT, "title: ")
+            RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, "\n")
             print(title)
+            break
+
 
 # 장르 ↕
 def InitGenreComboBox():
@@ -118,7 +145,7 @@ def InitRenderText():
     RenderTextScrollbar.grid(row=3,column=3)
 
     TempFont = font.Font(g_Tk, size=10, family=myFont)
-    RenderText = Text(g_Tk,font=TempFont, width=70, #height=27 borderwidth=12,
+    RenderText = Text(g_Tk,font=TempFont, width=70, height=23, # borderwidth=12,
                       relief='flat',
                       yscrollcommand=RenderTextScrollbar.set)
     RenderText.grid(row=3,column=4,rowspan=6, columnspan=4)
@@ -144,6 +171,7 @@ def InitRenderListBox():
 InitTopText()
 InitInputLabel()
 InitSearchButton()
+InitDetailButton()
 InitGenreComboBox()
 InitCountryComboBox()
 InitRenderText()
@@ -151,4 +179,5 @@ InitRenderListBox()
 #InitSendEmailButton()
 #InitSortListBox()
 #InitSortButton()
+
 g_Tk.mainloop()
