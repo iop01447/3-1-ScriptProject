@@ -11,16 +11,23 @@ DataList = []
 myFont = 'KoPub돋움체 Medium'
 
 # 이런 식으로 쓰면 되지 않을까 .. #
-inputGenre = 5
-inputCountry = 'KR'
-itemElements = test_internet.FindKeyword(inputGenre, inputCountry)
-for item in itemElements:
-    title = item.find("title").text
-    link = item.find("link").text
-    print("=========================================")
-    print("title: ", title)
-    print("link: ", link)
-    print("=========================================")
+# keyword = "사랑"
+# inputGenre = 0
+# inputCountry = ''
+# itemElements = test_internet.FindKeyword(keyword, inputGenre, inputCountry)
+# for item in itemElements:
+#     title = item.find("title").text
+#     link = item.find("link").text
+#     image = item.find("image").text
+#     subtitle = item.find("subtitle").text
+#     pubDate = item.find("pubDate").text
+#     director = item.find("director").text
+#     actor = item.find("actor").text
+#     userRating = item.find("userRating").text
+#     print("=========================================")
+#     print("title: ", title)
+#     print("link: ", link)
+#     print("=========================================")
 # 이런 식으로 쓰면 되지 않을까 .. #
 
 # weight='bold'
