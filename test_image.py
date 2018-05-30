@@ -6,8 +6,7 @@ from PIL import Image, ImageTk
 # g_Tk = Tk()
 # g_Tk.geometry("900x600+100+100") # width height x y
 
-def imageRead():
-    imageUrl="http://imgmovie.naver.com/mdi/mit110/1531/153129_P01_105507.jpg"
+def imageRead(imageUrl):
     with urllib.request.urlopen(imageUrl) as u:
         raw_data = u.read()
 

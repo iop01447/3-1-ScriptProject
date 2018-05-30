@@ -3,6 +3,7 @@ from tkinter import font
 from tkinter import ttk
 from tkinter import messagebox
 import test_internet
+import test_image
 g_Tk = Tk()
 #g_Tk.geometry("900x600+100+100") # width height x y
 # 400 400 100   // 300
@@ -14,6 +15,8 @@ myFont = 'KoPub돋움체 Medium'
 keyword = ''
 inputGenre = 0
 inputCountry = ''
+
+imageLabel = Label(g_Tk, image=None)
 
 # 타이틀
 def InitTopText():
@@ -45,16 +48,14 @@ def InitDetailButton():
 
 #검색 버튼 누른 후 동작
 def SearchButtonAction():
-    global GenreComboBox
+    global GenreComboBox, imageLabel
 
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
     RederListBox.delete(0, END)
-
+    imageLabel.config(image=None)
+    imageLabel.image = None
     SearchKeyword()
-
-#    print(GenreStr.get())
-
     RenderText.configure(state='disabled')
 
 # 검색
@@ -78,7 +79,13 @@ def SearchKeyword():
 
 # 검색 상세 정보
 def ShowDetail():
-    global RederListBox, itemElements
+    global RederListBox, itemElements, RenderText, imageLabel
+    RenderText.delete(0.0, END)
+
+    RenderText.configure(state='normal')
+    imageLabel.config(image=None)
+    imageLabel.image = None
+
     if RederListBox.curselection() != None:
         key = RenderList[RederListBox.curselection()[0]]
     itemElements = test_internet.FindKeyword(key, inputGenre, inputCountry)
@@ -90,8 +97,56 @@ def ShowDetail():
             RenderText.insert(INSERT, "title: ")
             RenderText.insert(INSERT, title)
             RenderText.insert(INSERT, "\n")
-            print(title)
+
+            if item.find("link") != None:
+                link = item.find("link").text
+                RenderText.insert(INSERT, "link: ")
+                RenderText.insert(INSERT, link)
+                RenderText.insert(INSERT, "\n")
+
+            if item.find("image") != None:
+                image = item.find("image").text
+                RenderText.insert(INSERT, "image url: ")
+                RenderText.insert(INSERT, image)
+                RenderText.insert(INSERT, "\n")
+
+                photo = test_image.imageRead(image)
+
+                imageLabel.config(image=photo)
+                imageLabel.grid(row=2, column=10, rowspan=6, columnspan=2)
+
+            if item.find("subtitle") != None:
+                subtitle = item.find("subtitle").text
+                RenderText.insert(INSERT, "sub title: ")
+                RenderText.insert(INSERT, subtitle)
+                RenderText.insert(INSERT, "\n")
+
+            if item.find("pubDate") != None:
+                pubDate = item.find("pubDate").text
+                RenderText.insert(INSERT, "제작년도: ")
+                RenderText.insert(INSERT, pubDate)
+                RenderText.insert(INSERT, "\n")
+
+            if item.find("director") != None:
+                director = item.find("director").text
+                RenderText.insert(INSERT, "영화 감독: ")
+                RenderText.insert(INSERT, director)
+                RenderText.insert(INSERT, "\n")
+
+            if item.find("actor") != None:
+                actor = item.find("actor").text
+                RenderText.insert(INSERT, "출연 배우: ")
+                RenderText.insert(INSERT, actor)
+                RenderText.insert(INSERT, "\n")
+
+            if item.find("userRating") != None:
+                userRating = item.find("userRating").text
+                RenderText.insert(INSERT, "유저 평점: ")
+                RenderText.insert(INSERT, userRating)
+                RenderText.insert(INSERT, "\n")
             break
+
+    RenderText.configure(state='disabled')
 
 
 # 장르 ↕
