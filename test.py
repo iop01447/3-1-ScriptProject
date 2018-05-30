@@ -61,6 +61,8 @@ def SearchKeyword():
     for item in itemElements:
         if item.find("title") != None:
             title = item.find("title").text
+            #RenderText.insert(INSERT, title)
+            #RenderText.insert(INSERT, "\n")
             RederListBox.insert(itemCnt, title)
             itemCnt += 1
             print(title)
