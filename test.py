@@ -11,18 +11,9 @@ DataList = []
 
 myFont = 'KoPub돋움체 Medium'
 
-# # 이런 식으로 쓰면 되지 않을까 .. #
-# inputGenre = 5
-# inputCountry = 'KR'
-# itemElements = test_internet.FindKeyword(inputGenre, inputCountry)
-# for item in itemElements:
-#     title = item.find("title").text
-#     link = item.find("link").text
-#     print("=========================================")
-#     print("title: ", title)
-#     print("link: ", link)
-#     print("=========================================")
-# # 이런 식으로 쓰면 되지 않을까 .. #
+keyword = ''
+inputGenre = 0
+inputCountry = ''
 
 # 타이틀
 def InitTopText():
@@ -52,69 +43,17 @@ def SearchButtonAction():
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
     iSearchIndex = GenreComboBox.curselection()[0]
-    if iSearchIndex == 0:
-        SearchLibrary()
-    elif iSearchIndex == 1:
-        pass#SearchGoodFoodService()
-    elif iSearchIndex == 2:
-        pass#SearchMarket()
-    elif iSearchIndex == 3:
-        pass#SearchCultural()
+    SearchKeyword()
 
     RenderText.configure(state='disabled')
 
-def SearchLibrary():
-    import http.client
-    from xml.dom.minidom import parse, parseString
-    conn = http.client.HTTPConnection("openAPI.seoul.go.kr:8088")
-    conn.request("GET", "/6b4f54647867696c3932474d68794c/xml/GeoInfoLibrary/1/800")
-    req = conn.getresponse()
-    global DataList
-    DataList.clear()
+def SearchKeyword():
+    global keyword, inputGenre, inputCountry
 
-    if req.status == 200:
-        BooksDoc = req.read().decode('utf-8')
-        if BooksDoc == None:
-            print("에러")
-        else:
-            parseData = parseString(BooksDoc)
-            GeoInfoLibrary = parseData.childNodes
-            row = GeoInfoLibrary[0].childNodes
-
-            for item in row:
-                if item.nodeName == "row":
-                    subitems = item.childNodes
-
-                    if subitems[3].firstChild.nodeValue == InputLabel.get():  #
-                        pass
-                    elif subitems[5].firstChild.nodeValue == InputLabel.get():  #
-                        pass
-                    else:
-                        continue
-
-                    if subitems[29].firstChild is not None:
-                        tel = str(subitems[29].firstChild.nodeValue)
-                        pass  #
-                        if tel[0] is not '0':
-                            tel = "02-" + tel
-                            pass
-                        DataList.append((subitems[15].firstChild.nodeValue, subitems[13].firstChild.nodeValue, tel))
-                    else:
-                        DataList.append((subitems[15].firstChild.nodeValue, subitems[13].firstChild.nodeValue, "-"))
-
-            for i in range(len(DataList)):
-                RenderText.insert(INSERT, "[")
-                RenderText.insert(INSERT, i + 1)
-                RenderText.insert(INSERT, "] ")
-                RenderText.insert(INSERT, "시설명: ")
-                RenderText.insert(INSERT, DataList[i][0])
-                RenderText.insert(INSERT, "\n")
-                RenderText.insert(INSERT, "주소: ")
-                RenderText.insert(INSERT, DataList[i][1])
-                RenderText.insert(INSERT, "\n")
-                RenderText.insert(INSERT, "전화번호: ")
-                RenderText.insert(INSERT, DataList[i][2])
-                RenderText.insert(INSERT, "\n\n")
+    itemElements = test_internet.FindKeyword(keyword, inputGenre, inputCountry)
+    for item in itemElements:
+        title = item.find("title").text
+        print("title: ", title)
 
 # 장르 ↕
 def InitGenreComboBox():
