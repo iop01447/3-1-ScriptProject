@@ -33,17 +33,19 @@ def InitInputLabel():
 def InitSearchButton():
     TempFont = font.Font(g_Tk, size=15, family=myFont)
     SearchButton = Button(g_Tk, font=TempFont, text="검색", command=SearchButtonAction,
-                          background='#00C73C',relief='flat', fg='white',
-                          width=5)
+                          background='#00C73C',relief='flat', fg='white', width=5)
     SearchButton.grid(row=1,column=3)
 
 def SearchButtonAction():
     global GenreComboBox
+    global GenreStr
 
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
-    iSearchIndex = GenreComboBox.curselection()[0]
+
     SearchKeyword()
+
+    print(GenreStr.get())
 
     RenderText.configure(state='disabled')
 
@@ -58,9 +60,11 @@ def SearchKeyword():
 # 장르 ↕
 def InitGenreComboBox():
     global GenreComboBox
+    global GenreStr
 
     TempFont = font.Font(g_Tk, size=15, family=myFont)
-    GenreComboBox = ttk.Combobox(g_Tk, font=TempFont)
+    GenreStr = StringVar()
+    GenreComboBox = ttk.Combobox(g_Tk, font=TempFont, textvariable=GenreStr)
     GenreComboBox['values']=('드라마', '판타지', '서부', '공포', '로맨스',
                              '모험', '스릴러', '느와르', '컬트', '다큐멘터리',
                              '코미디', '가족', '미스터리', '전쟁',
@@ -80,7 +84,7 @@ def InitRenderText():
 
     TempFont = font.Font(g_Tk, size=10, family=myFont)
     RenderText = Text(g_Tk, width=49,height=27,font=TempFont,
-                      borderwidth=12, relief='groove',
+                      borderwidth=12, relief='flat',
                       yscrollcommand=RenderTextScrollbar.set)
     RenderText.grid(row=3,column=0,rowspan=6,columnspan=4)
     RenderTextScrollbar.config(command=RenderText.yview)
