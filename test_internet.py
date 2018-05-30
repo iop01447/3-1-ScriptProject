@@ -7,11 +7,11 @@ client_secret = "rTt8fYC9LA"
 #inputGenre = 0      # 1~28
 #inputContry = ""    # 한국 (KR), 일본 (JP), 미국 (US), 홍콩 (HK), 영국 (GB), 프랑스 (FR), 기타 (ETC)
 
-def FindKeyword(inputGenre, inputCountry):
+def FindKeyword(Keyword, inputGenre, inputCountry):
     global client_id, client_secret
 
     conn = http.client.HTTPSConnection(server)
-    Keyword = str(input("Keyword : "))
+    #Keyword = str(input("Keyword : "))
     encText = urllib.parse.quote(Keyword)
     conn.request("GET", "/v1/search/movie.xml?dispaly=10&start=1&display=10&query=" + encText
                  + "&genre=" + str(inputGenre) + "&country=" + str(inputCountry),
