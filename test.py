@@ -43,6 +43,7 @@ def SearchButtonAction():
 
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
+    RederListBox.delete(0, END)
 
     SearchKeyword()
 
@@ -60,8 +61,7 @@ def SearchKeyword():
     for item in itemElements:
         if item.find("title") != None:
             title = item.find("title").text
-            RenderText.insert(INSERT, title)
-            RenderText.insert(INSERT, "\n")
+            RederListBox.insert(itemCnt, title)
             itemCnt += 1
             print(title)
 
@@ -107,9 +107,24 @@ def InitRenderText():
     RenderText = Text(g_Tk,font=TempFont, width=70, #height=27 borderwidth=12,
                       relief='flat',
                       yscrollcommand=RenderTextScrollbar.set)
-    RenderText.grid(row=3,column=0,rowspan=6,columnspan=4)
+    RenderText.grid(row=3,column=4,rowspan=6, columnspan=4)
     RenderTextScrollbar.config(command=RenderText.yview)
     RenderText.configure(state='disabled')
+
+def InitRenderListBox():
+    global RederListBox
+
+    RenderTextScrollbar = Scrollbar(g_Tk)
+    RenderTextScrollbar.grid(row=3, column=3)
+
+    TempFont = font.Font(g_Tk, size=10, family=myFont)
+    RederListBox = Listbox(g_Tk, font=TempFont, activestyle='none',
+                           width=70, height=22, #borderwidth=12,
+                      relief='flat',
+                      yscrollcommand=RenderTextScrollbar.set)
+    RederListBox.grid(row=3, column=0, rowspan=6, columnspan=4)
+    RenderTextScrollbar.config(command=RederListBox.yview)
+    #RederListBox.configure(state='disabled')
 
 #…
 InitTopText()
@@ -118,6 +133,7 @@ InitSearchButton()
 InitGenreComboBox()
 InitCountryComboBox()
 InitRenderText()
+InitRenderListBox()
 #InitSendEmailButton()
 #InitSortListBox()
 #InitSortButton()
