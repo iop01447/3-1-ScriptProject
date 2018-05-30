@@ -47,11 +47,11 @@ def InitSearchButton():
     SearchButton.grid(row=1,column=3)
 
 def SearchButtonAction():
-    global SearchListBox
+    global GenreComboBox
 
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
-    iSearchIndex = SearchListBox.curselection()[0]
+    iSearchIndex = GenreComboBox.curselection()[0]
     if iSearchIndex == 0:
         SearchLibrary()
     elif iSearchIndex == 1:
@@ -117,20 +117,20 @@ def SearchLibrary():
                 RenderText.insert(INSERT, "\n\n")
 
 # 장르 ↕
-def InitSearchListBox():
-    global SearchListBox
+def InitGenreComboBox():
+    global GenreComboBox
 
     TempFont = font.Font(g_Tk, size=15, family=myFont)
-    SearchListBox = ttk.Combobox(g_Tk, font=TempFont)
-    SearchListBox['values']=('드라마', '판타지', '서부', '공포', '로맨스',
+    GenreComboBox = ttk.Combobox(g_Tk, font=TempFont)
+    GenreComboBox['values']=('드라마', '판타지', '서부', '공포', '로맨스',
                              '모험', '스릴러', '느와르', '컬트', '다큐멘터리',
                              '코미디', '가족', '미스터리', '전쟁',
                              '애니메이션', '범죄', '뮤지털', 'SF',
                              '액션', '무협', '에로', '서스펜스', '서사',
                              '블랙코미디', '실험', '영화카툰', '영화음악',
                              '영화패러디포스터')
-    SearchListBox.grid(row=2,column=0,columnspan=2)
-    SearchListBox.current(0)
+    GenreComboBox.grid(row=2,column=0,columnspan=2)
+    GenreComboBox.current(0)
 
 # 리스트 창
 def InitRenderText():
@@ -149,7 +149,7 @@ def InitRenderText():
 
 #…
 InitTopText()
-InitSearchListBox()
+InitGenreComboBox()
 InitInputLabel()
 InitSearchButton()
 InitRenderText()
