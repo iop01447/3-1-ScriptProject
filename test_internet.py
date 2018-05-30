@@ -11,9 +11,8 @@ def FindKeyword(Keyword, inputGenre, inputCountry):
     global client_id, client_secret
 
     conn = http.client.HTTPSConnection(server)
-    #Keyword = str(input("Keyword : "))
     encText = urllib.parse.quote(Keyword)
-    conn.request("GET", "/v1/search/movie.xml?dispaly=10&start=1&display=10&query=" + encText
+    conn.request("GET", "/v1/search/movie.xml?dispaly=10&start=1&query=" + encText
                  + "&genre=" + str(inputGenre) + "&country=" + str(inputCountry),
                  None, {"X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": client_secret})
     req = conn.getresponse()

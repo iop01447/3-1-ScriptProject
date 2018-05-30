@@ -36,6 +36,7 @@ def InitSearchButton():
                           background='#00C73C',relief='flat', fg='white', width=5)
     SearchButton.grid(row=1,column=3)
 
+#검색 버튼 누른 후 동작
 def SearchButtonAction():
     global GenreComboBox
     global GenreStr
@@ -49,13 +50,20 @@ def SearchButtonAction():
 
     RenderText.configure(state='disabled')
 
+# 검색
 def SearchKeyword():
     global keyword, inputGenre, inputCountry
+    itemCnt = 1
 
+    keyword = str(InputLabel.get())
     itemElements = test_internet.FindKeyword(keyword, inputGenre, inputCountry)
     for item in itemElements:
-        title = item.find("title").text
-        print("title: ", title)
+        if item.find("title") != None:
+            title = item.find("title").text
+            RenderText.insert(INSERT, title)
+            RenderText.insert(INSERT, "\n")
+            itemCnt += 1
+            print(title)
 
 # 장르 ↕
 def InitGenreComboBox():
