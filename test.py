@@ -80,9 +80,9 @@ def SearchKeyword():
 # 검색 상세 정보
 def ShowDetail():
     global RederListBox, itemElements, RenderText, imageLabel
-    RenderText.delete(0.0, END)
 
     RenderText.configure(state='normal')
+    RenderText.delete(0.0, END)
     imageLabel.config(image=None)
     imageLabel.image = None
 
@@ -98,17 +98,17 @@ def ShowDetail():
             RenderText.insert(INSERT, title)
             RenderText.insert(INSERT, "\n")
 
-            if item.find("link") != None:
-                link = item.find("link").text
-                RenderText.insert(INSERT, "link: ")
-                RenderText.insert(INSERT, link)
-                RenderText.insert(INSERT, "\n")
+            # if item.find("link") != None:
+            #     link = item.find("link").text
+            #     RenderText.insert(INSERT, "link: ")
+            #     RenderText.insert(INSERT, link)
+            #     RenderText.insert(INSERT, "\n")
 
             if item.find("image") != None:
                 image = item.find("image").text
-                RenderText.insert(INSERT, "image url: ")
-                RenderText.insert(INSERT, image)
-                RenderText.insert(INSERT, "\n")
+               # RenderText.insert(INSERT, "image url: ")
+               # RenderText.insert(INSERT, image)
+               # RenderText.insert(INSERT, "\n")
 
                 photo = test_image.imageRead(image)
 
