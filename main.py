@@ -92,7 +92,6 @@ def ShowDetail():
     RenderText.delete(0.0, END)
     imageLabel.config(image=None)
     imageLabel.image = None
-    print(RenderListBox.curselection())
     if str(RenderListBox.curselection()) != "()" \
             or str(BookmarkListBox.curselection()) != "()":
         if str(RenderListBox.curselection()) != "()":
@@ -267,10 +266,10 @@ def BookmarkAdd():
     global RenderListBox, BookmarkListBox, BookmarkItemCnt, BookmarkList
     if RenderListBox.curselection() != None:
         key = RenderList[RenderListBox.curselection()[0]]
-        BookmarkListBox.insert(BookmarkItemCnt, key)
-        BookmarkItemCnt += 1
-        BookmarkList.append(key)
-    #bookmark.Add()
+        if not key in BookmarkList:
+            BookmarkListBox.insert(BookmarkItemCnt, key)
+            BookmarkItemCnt += 1
+            BookmarkList.append(key)
 
 # 북마크 삭제 버튼
 def InitBookmarkDelButton():
@@ -282,9 +281,7 @@ def InitBookmarkDelButton():
 def BookmarkDel():
     global BookmarkListBox
     if BookmarkListBox.curselection() != None:
-        # key = BookmarkList[BookmarkListBox.curselection()[0]]
         BookmarkListBox.delete(BookmarkListBox.curselection()[0], BookmarkListBox.curselection()[0])
-    bookmark.Del()
 
 # 북마크 SAVE 버튼
 def InitBookmarkSaveButton():
