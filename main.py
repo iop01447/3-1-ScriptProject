@@ -4,6 +4,8 @@ from tkinter import ttk
 from tkinter import messagebox
 import search_internet
 import search_image
+import gmail
+
 g_Tk = Tk()
 #g_Tk.geometry("900x600+100+100") # width height x y
 # 400 400 100   // 300
@@ -224,13 +226,18 @@ def InitRenderListBox():
 
 # 이메일 버튼
 def InitSendEmailButton():
+    global RenderText
     TempFont = font.Font(g_Tk, size=11, family=myFont)
+    RenderText.configure(state='normal')
+    text = RenderText.get(0.0, END)
     SendEmailButton = Button(g_Tk, font=TempFont, text="SEND EMAIL", command=SendEmail,
                           relief='flat', background="white", width=15)
     SendEmailButton.grid(row=2, column=5)
 
 def SendEmail():
-    
+    gmail.SendEmail(RenderText.get(0.0, END))
+
+
 #…
 InitTopText()
 InitInputLabel()

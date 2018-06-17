@@ -4,8 +4,9 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="2017-ScriptProject-master" />
     <orderEntry type="module" module-name="ScriptLangauge" />
+    <orderEntry type="module" module-name="9장" />
+    <orderEntry type="module" module-name="19장" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />

@@ -1,91 +1,26 @@
-# imports
-# Use Tkinter for python 2, tkinter for python 3
-import tkinter as tk
-import tkinter.scrolledtext as tkst
-import tkinter.messagebox as tkmb
-from tkinter import ttk
-# Define a ManagerApp class
-class ManagerApp(tk.Frame):
+# import telepot
+# from urllib.request import urlopen
+#
+# # movie_telegram_bot
+# bot = telepot.Bot('618132164:AAGRSPO6NjwzNQvRTcK-aWysp8WurNsBTgw')
+# print(bot.getMe())
+# # 595832994
+# print(bot.sendMessage('549346292', '안녕하세요. 영화 텔레그램 봇입니다.'))
+# bot.sendMessage('549346292', '열심이시군요. 혜리씨.')
+#
+# url = 'http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcRHTrade?serviceKey=sea100UMmw23Xycs33F1EQnumONR%2F9ElxBLzkilU9Yr1oT4TrCot8Y2p0jyuJP72x9rG9D8CN5yuEs6AS2sAiw%3D%3D&LAWD_CD=11110&DEAL_YMD=201712'
+# response = urlopen(url).read()
+# print(response)
 
-    def __init__(self, parent, *args, **kwargs):
-        tk.Frame.__init__(self, parent, *args, **kwargs)
-        self.parent = parent
-        self.connection = None
-        self.pack()
-        self.createWidgets()
+r = int(input())
+a = int(input())
 
-    def createWidgets(self):
-        self.labelReader = ttk.Label(self, text='Reader')
-        self.labelReader.grid(column=0, row=0)
+r = r/100/12
+money = a
 
-        self.reader_name = tk.StringVar()  # String variable
-        self.comboReader = ttk.Combobox(self, width=30, state='readonly'
-                                        , textvariable=self.reader_name)  # Create a combobox
-        self.comboReader.grid(column=1, row=0)
-        self.comboReader['values'] = readers()
-        try:
-            self.comboReader.current(0)
-        except:
-            pass
+for i in range(1,13):
+    money *= (1+r)
+    print("{0}달 후 잔고: {1:.2f}".format(i, money))
+    money+=a
 
-        self.buttonReset = ttk.Button(self, text='Reset...', command=self.clickReset)  # Create a button
-        self.buttonReset.grid(column=2, row=0)
-
-        self.stLog = tkst.ScrolledText(self, width=50, height=20, wrap=tk.WORD)  # Create a scrolledtext
-        self.stLog.grid(column=0, row=1, columnspan=3)
-
-        self.entryCommand = tk.Entry(self, width=40)  # Create a entry
-        self.entryCommand.grid(column=0, row=2, columnspan=2)
-        self.entryCommand.focus_set()
-
-        self.buttonCommand = ttk.Button(self, text='Send...', command=self.clickSend)  # Create a button
-        self.buttonCommand.grid(column=2, row=2)
-
-    # Click a reset button
-    def clickReset(self):
-        if self.connection is not None:
-            self.connection.disconnect()
-            self.connection = None
-
-        try:
-            for r in readers():
-                if r.name == self.reader_name.get():
-                    self.connection = r.createConnection()
-                    self.connection.connect()
-                    self.stLog.insert(tk.END, 'ATR: '
-                                      + toHexString(self.connection.getATR()) + '\n')
-                    self.stLog.see(tk.END)
-                    break
-        except:
-            tkmb.showinfo('Error', 'Please check a card or readers...')
-
-    # Click a send button
-    def clickSend(self):
-        apdu = toBytes(self.entryCommand.get())
-        response, sw1, sw2 = self.connection.transmit(apdu)
-        # print('response: ', response, ' status words: ', "%x %x" % (sw1, sw2))
-        capdu = '< ' + toHexString(apdu) + '\n'
-        rapdu = ('> ' + toHexString(response) + '\n> {:02X}'.format(sw1)
-                 + ' {:02X}'.format(sw2) + '\n')
-        self.stLog.insert(tk.END, capdu + rapdu)
-        self.stLog.see(tk.END)
-
-        if (sw1 == 0x61):  # Get Response
-            getResponse = '00C00000' + '{:02X}'.format(sw2)
-            apdu = toBytes(getResponse)
-            response, sw1, sw2 = self.connection.transmit(apdu)
-            # print('response: ', response, ' status words: ', "%x %x" % (sw1, sw2))
-            capdu = '< ' + toHexString(apdu) + '\n'
-            rapdu = ('> ' + toHexString(response) + '\n> {:02X}'.format(sw1)
-                     + ' {:02X}'.format(sw2) + '\n')
-            self.stLog.insert(tk.END, capdu + rapdu)
-            self.stLog.see(tk.END)
-
-
-if __name__ == '__main__':
-    root = tk.Tk()
-    root.title('Manager')  # Add a title
-    ManagerApp(root).pack(side="top", fill="both", expand=True)
-
-    root.resizable(0, 0)  # Disable resizing the GUI
-    root.mainloop()  # Start GUI
+# 하 슈벌 에
