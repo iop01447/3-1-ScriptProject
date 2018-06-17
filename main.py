@@ -222,6 +222,16 @@ def InitRenderListBox():
     RenderTextScrollbar.config(command=RederListBox.yview)
     #RederListBox.configure(state='disabled')
 
+# 이메일 버튼
+def InitSendEmailButton():
+    TempFont = font.Font(g_Tk, size=11, family=myFont)
+    SendEmailButton = Button(g_Tk, font=TempFont, text="SEND EMAIL", command=SendEmail,
+                          relief='flat', background="white", width=15)
+    SendEmailButton.grid(row=2, column=5)
+
+def SendEmail():
+
+
 #…
 InitTopText()
 InitInputLabel()
@@ -231,7 +241,7 @@ InitGenreComboBox()
 InitCountryComboBox()
 InitRenderText()
 InitRenderListBox()
-#InitSendEmailButton()
+InitSendEmailButton()
 #InitSortListBox()
 #InitSortButton()
 
