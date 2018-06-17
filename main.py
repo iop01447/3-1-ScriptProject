@@ -5,6 +5,7 @@ from tkinter import messagebox
 import search_internet
 import search_image
 import gmail
+import bookmark
 
 g_Tk = Tk()
 #g_Tk.geometry("900x600+100+100") # width height x y
@@ -208,6 +209,7 @@ def InitRenderText():
     RenderTextScrollbar.config(command=RenderText.yview)
     RenderText.configure(state='disabled')
 
+# 북마크 타이틀
 def InitRenderListBox():
     global RederListBox
 
@@ -222,6 +224,53 @@ def InitRenderListBox():
     RederListBox.grid(row=3, column=0, rowspan=6, columnspan=4)
     RenderTextScrollbar.config(command=RederListBox.yview)
     #RederListBox.configure(state='disabled')
+
+# 북마크 타이틀
+def InitBookmarkText():
+    TempFont = font.Font(g_Tk, size=18, family=myFont)
+    MainText = Label(g_Tk, font=TempFont, text="북마크",
+                     relief='flat')
+    MainText.grid(row=0,column=4,columnspan=4)
+
+# 북마크 추가 버튼
+def InitBookmarkAddButton():
+    TempFont = font.Font(g_Tk, size=11, family=myFont)
+    DetailButton = Button(g_Tk, font=TempFont, text="추가", command=BookmarkAdd,
+                          relief='flat', background="white", width=10)
+    DetailButton.grid(row=1,column=4)
+
+def BookmarkAdd():
+    bookmark.Add()
+
+# 북마크 삭제 버튼
+def InitBookmarkDelButton():
+    TempFont = font.Font(g_Tk, size=11, family=myFont)
+    DetailButton = Button(g_Tk, font=TempFont, text="삭제", command=BookmarkDel,
+                          relief='flat', background="white", width=10)
+    DetailButton.grid(row=1,column=4, columnspan=3)
+
+def BookmarkDel():
+    bookmark.Del()
+
+# 북마크 SAVE 버튼
+def InitBookmarkSaveButton():
+    TempFont = font.Font(g_Tk, size=11, family=myFont)
+    DetailButton = Button(g_Tk, font=TempFont, text="SAVE", command=BookmarkSave,
+                          relief='flat', background="white", width=10)
+    DetailButton.grid(row=1,column=5, columnspan=4)
+
+def BookmarkSave():
+    bookmark.Save()
+
+# 북마크 LOAD 버튼
+def InitBookmarkLoadButton():
+    TempFont = font.Font(g_Tk, size=11, family=myFont)
+    DetailButton = Button(g_Tk, font=TempFont, text="LOAD", command=BookmarkLoad,
+                          relief='flat', background="white", width=10)
+    DetailButton.grid(row=1,column=7)
+
+def BookmarkLoad():
+    bookmark.Load()
 
 # 이메일 버튼
 def InitSendEmailButton():
@@ -246,6 +295,11 @@ InitGenreComboBox()
 InitCountryComboBox()
 InitRenderText()
 InitRenderListBox()
+InitBookmarkText()
+InitBookmarkAddButton()
+InitBookmarkDelButton()
+InitBookmarkSaveButton()
+InitBookmarkLoadButton()
 InitSendEmailButton()
 #InitSortListBox()
 #InitSortButton()
