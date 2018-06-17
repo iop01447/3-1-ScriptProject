@@ -15,6 +15,7 @@ myFont = 'KoPub돋움체 Medium'
 keyword = ''
 inputGenre = 0
 inputCountry = ''
+#photo = None
 
 imageLabel = Label(g_Tk, image=None)
 
@@ -98,52 +99,54 @@ def ShowDetail():
             RenderText.insert(INSERT, title)
             RenderText.insert(INSERT, "\n")
 
-            if item.find("link") != None:
-                link = item.find("link").text
-                RenderText.insert(INSERT, "link: ")
-                RenderText.insert(INSERT, link)
-                RenderText.insert(INSERT, "\n")
+            # # if item.find("image") != None:
+            # image = item.find("image").text
+            # print(type(image)) <class 'str'>
+            #
+            # photo = search_image.imageRead(image)
+            # print(type(photo)) <class 'PIL.ImageTk.PhotoImage'>
+            #
+            # imageLabel.config(image=photo)
+            # imageLabel.grid(row=2, column=10, rowspan=6, columnspan=2)
 
-            if item.find("image") != None:
-                image = item.find("image").text
-               # RenderText.insert(INSERT, "image url: ")
-               # RenderText.insert(INSERT, image)
-               # RenderText.insert(INSERT, "\n")
-
-                photo = search_image.imageRead(image)
-
-                imageLabel.config(image=photo)
-                imageLabel.grid(row=2, column=10, rowspan=6, columnspan=2)
-
-            if item.find("subtitle") != None:
+            if item.find("subtitle").text != None:
                 subtitle = item.find("subtitle").text
                 RenderText.insert(INSERT, "sub title: ")
                 RenderText.insert(INSERT, subtitle)
                 RenderText.insert(INSERT, "\n")
 
-            if item.find("pubDate") != None:
+            if item.find("pubDate").text != None:
                 pubDate = item.find("pubDate").text
                 RenderText.insert(INSERT, "제작년도: ")
                 RenderText.insert(INSERT, pubDate)
                 RenderText.insert(INSERT, "\n")
 
-            if item.find("director") != None:
+            if item.find("director").text != None:
                 director = item.find("director").text
                 RenderText.insert(INSERT, "영화 감독: ")
                 RenderText.insert(INSERT, director)
                 RenderText.insert(INSERT, "\n")
 
-            if item.find("actor") != None:
+            #if item.find("actor") != None:
+            if item.find("actor").text != None:
                 actor = item.find("actor").text
+            #if actor != None:
                 RenderText.insert(INSERT, "출연 배우: ")
                 RenderText.insert(INSERT, actor)
                 RenderText.insert(INSERT, "\n")
 
-            if item.find("userRating") != None:
+            if item.find("userRating").text != None:
                 userRating = item.find("userRating").text
                 RenderText.insert(INSERT, "유저 평점: ")
                 RenderText.insert(INSERT, userRating)
                 RenderText.insert(INSERT, "\n")
+
+            if item.find("link").text != None:
+                link = item.find("link").text
+                RenderText.insert(INSERT, "link: ")
+                RenderText.insert(INSERT, link)
+                RenderText.insert(INSERT, "\n")
+
             break
 
     RenderText.configure(state='disabled')
@@ -230,7 +233,8 @@ def InitSendEmailButton():
     SendEmailButton.grid(row=2, column=5)
 
 def SendEmail():
-    
+    pass
+
 #…
 InitTopText()
 InitInputLabel()
