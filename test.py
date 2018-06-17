@@ -98,11 +98,11 @@ def ShowDetail():
             RenderText.insert(INSERT, title)
             RenderText.insert(INSERT, "\n")
 
-            # if item.find("link") != None:
-            #     link = item.find("link").text
-            #     RenderText.insert(INSERT, "link: ")
-            #     RenderText.insert(INSERT, link)
-            #     RenderText.insert(INSERT, "\n")
+            if item.find("link") != None:
+                link = item.find("link").text
+                RenderText.insert(INSERT, "link: ")
+                RenderText.insert(INSERT, link)
+                RenderText.insert(INSERT, "\n")
 
             if item.find("image") != None:
                 image = item.find("image").text
