@@ -14,4 +14,8 @@
 
 import spam
 
+<<<<<<< HEAD
 spam.save("test3464546")
+=======
+spam.save("fuckkkkkk")
+>>>>>>> 27eb3a91ba1ef24664f80b2f5015516390ffbf75
