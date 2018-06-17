@@ -2,8 +2,8 @@ from tkinter import *
 from tkinter import font
 from tkinter import ttk
 from tkinter import messagebox
-import test_internet
-import test_image
+import search_internet
+import search_image
 g_Tk = Tk()
 #g_Tk.geometry("900x600+100+100") # width height x y
 # 400 400 100   // 300
@@ -66,7 +66,7 @@ def SearchKeyword():
     RenderList = []
 
     keyword = str(InputLabel.get())
-    itemElements = test_internet.FindKeyword(keyword, GenreDic[GenreStr.get()], CountryDic[CountryStr.get()])
+    itemElements = search_internet.FindKeyword(keyword, GenreDic[GenreStr.get()], CountryDic[CountryStr.get()])
     for item in itemElements:
         if item.find("title") != None:
             title = item.find("title").text
@@ -88,7 +88,7 @@ def ShowDetail():
 
     if RederListBox.curselection() != None:
         key = RenderList[RederListBox.curselection()[0]]
-    itemElements = test_internet.FindKeyword(key, inputGenre, inputCountry)
+    itemElements = search_internet.FindKeyword(key, inputGenre, inputCountry)
     for item in itemElements:
         title = item.find("title").text
         title = title.replace("<b>", "")
@@ -110,7 +110,7 @@ def ShowDetail():
                # RenderText.insert(INSERT, image)
                # RenderText.insert(INSERT, "\n")
 
-                photo = test_image.imageRead(image)
+                photo = search_image.imageRead(image)
 
                 imageLabel.config(image=photo)
                 imageLabel.grid(row=2, column=10, rowspan=6, columnspan=2)
@@ -230,8 +230,7 @@ def InitSendEmailButton():
     SendEmailButton.grid(row=2, column=5)
 
 def SendEmail():
-
-
+    
 #…
 InitTopText()
 InitInputLabel()
