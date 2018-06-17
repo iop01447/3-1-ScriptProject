@@ -12,6 +12,9 @@ g_Tk = Tk()
 # 400 400 100   // 300
 #               // 300
 DataList = []
+BookmarkListBox = []
+BookmarkItemCnt = 0
+BookmarkList = []
 
 myFont = 'KoPub돋움체 Medium'
 
@@ -56,7 +59,7 @@ def SearchButtonAction():
 
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
-    RederListBox.delete(0, END)
+    RenderListBox.delete(0, END)
     imageLabel.config(image=None)
     imageLabel.image = None
     SearchKeyword()
@@ -76,75 +79,79 @@ def SearchKeyword():
             title = item.find("title").text
             title = title.replace("<b>", "")
             title = title.replace("</b>", "")
-            RederListBox.insert(itemCnt, title)
+            RenderListBox.insert(itemCnt, title)
             itemCnt += 1
             RenderList.append(title)
 
 
 # 검색 상세 정보
 def ShowDetail():
-    global RederListBox, itemElements, RenderText, imageLabel, photo
+    global RenderListBox, BookmarkListBox, BookmarkList, itemElements, RenderText, imageLabel, photo
 
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
     imageLabel.config(image=None)
     imageLabel.image = None
-
-    if RederListBox.curselection() != None:
-        key = RenderList[RederListBox.curselection()[0]]
-    itemElements = search_internet.FindKeyword(key, inputGenre, inputCountry)
-    for item in itemElements:
-        title = item.find("title").text
-        title = title.replace("<b>", "")
-        title = title.replace("</b>", "")
-        if title == key:
-            RenderText.insert(INSERT, "title: ")
-            RenderText.insert(INSERT, title)
-            RenderText.insert(INSERT, "\n")
-
-            if item.find("image").text != None:
-                image = item.find("image").text
-                photo = search_image.imageRead(image)
-                imageLabel.config(image=photo)
-                imageLabel.grid(row=10, column=5, rowspan=6, columnspan=2)
-
-            if item.find("subtitle").text != None:
-                subtitle = item.find("subtitle").text
-                RenderText.insert(INSERT, "sub title: ")
-                RenderText.insert(INSERT, subtitle)
+    print(RenderListBox.curselection())
+    if str(RenderListBox.curselection()) != "()" \
+            or str(BookmarkListBox.curselection()) != "()":
+        if str(RenderListBox.curselection()) != "()":
+            key = RenderList[RenderListBox.curselection()[0]]
+        elif str(BookmarkListBox.curselection()) != "()":
+            key = BookmarkList[BookmarkListBox.curselection()[0]]
+        itemElements = search_internet.FindKeyword(key, inputGenre, inputCountry)
+        for item in itemElements:
+            title = item.find("title").text
+            title = title.replace("<b>", "")
+            title = title.replace("</b>", "")
+            if title == key:
+                RenderText.insert(INSERT, "title: ")
+                RenderText.insert(INSERT, title)
                 RenderText.insert(INSERT, "\n")
 
-            if item.find("pubDate").text != None:
-                pubDate = item.find("pubDate").text
-                RenderText.insert(INSERT, "제작년도: ")
-                RenderText.insert(INSERT, pubDate)
-                RenderText.insert(INSERT, "\n")
+                if item.find("image").text != None:
+                    image = item.find("image").text
+                    photo = search_image.imageRead(image)
+                    imageLabel.config(image=photo)
+                    imageLabel.grid(row=10, column=5, rowspan=6, columnspan=2)
 
-            if item.find("director").text != None:
-                director = item.find("director").text
-                RenderText.insert(INSERT, "영화 감독: ")
-                RenderText.insert(INSERT, director)
-                RenderText.insert(INSERT, "\n")
+                if item.find("subtitle").text != None:
+                    subtitle = item.find("subtitle").text
+                    RenderText.insert(INSERT, "sub title: ")
+                    RenderText.insert(INSERT, subtitle)
+                    RenderText.insert(INSERT, "\n")
 
-            if item.find("actor").text != None:
-                actor = item.find("actor").text
-                RenderText.insert(INSERT, "출연 배우: ")
-                RenderText.insert(INSERT, actor)
-                RenderText.insert(INSERT, "\n")
+                if item.find("pubDate").text != None:
+                    pubDate = item.find("pubDate").text
+                    RenderText.insert(INSERT, "제작년도: ")
+                    RenderText.insert(INSERT, pubDate)
+                    RenderText.insert(INSERT, "\n")
 
-            if item.find("userRating").text != None:
-                userRating = item.find("userRating").text
-                RenderText.insert(INSERT, "유저 평점: ")
-                RenderText.insert(INSERT, userRating)
-                RenderText.insert(INSERT, "\n")
+                if item.find("director").text != None:
+                    director = item.find("director").text
+                    RenderText.insert(INSERT, "영화 감독: ")
+                    RenderText.insert(INSERT, director)
+                    RenderText.insert(INSERT, "\n")
 
-            if item.find("link").text != None:
-                link = item.find("link").text
-                RenderText.insert(INSERT, "link: ")
-                RenderText.insert(INSERT, link)
-                RenderText.insert(INSERT, "\n")
+                if item.find("actor").text != None:
+                    actor = item.find("actor").text
+                    RenderText.insert(INSERT, "출연 배우: ")
+                    RenderText.insert(INSERT, actor)
+                    RenderText.insert(INSERT, "\n")
 
-            break
+                if item.find("userRating").text != None:
+                    userRating = item.find("userRating").text
+                    RenderText.insert(INSERT, "유저 평점: ")
+                    RenderText.insert(INSERT, userRating)
+                    RenderText.insert(INSERT, "\n")
+
+                if item.find("link").text != None:
+                    link = item.find("link").text
+                    RenderText.insert(INSERT, "link: ")
+                    RenderText.insert(INSERT, link)
+                    RenderText.insert(INSERT, "\n")
+
+                break
 
     RenderText.configure(state='disabled')
 
@@ -207,18 +214,18 @@ def InitRenderText():
 
 # 리스트 박스
 def InitRenderListBox():
-    global RederListBox
+    global RenderListBox
 
     RenderTextScrollbar = Scrollbar(g_Tk)
     RenderTextScrollbar.grid(row=3, column=3)
 
     TempFont = font.Font(g_Tk, size=10, family=myFont)
-    RederListBox = Listbox(g_Tk, font=TempFont, activestyle='none',
+    RenderListBox = Listbox(g_Tk, font=TempFont, activestyle='none',
                            width=70, height=22, #borderwidth=12,
                       relief='flat',
                       yscrollcommand=RenderTextScrollbar.set)
-    RederListBox.grid(row=3, column=0, rowspan=6, columnspan=4)
-    RenderTextScrollbar.config(command=RederListBox.yview)
+    RenderListBox.grid(row=3, column=0, rowspan=6, columnspan=4)
+    RenderTextScrollbar.config(command=RenderListBox.yview)
 
 # 북마크 리스트 타이틀
 def InitBookmarkListText():
@@ -257,16 +264,26 @@ def InitBookmarkAddButton():
     DetailButton.grid(row=1,column=4)
 
 def BookmarkAdd():
-    bookmark.Add()
+    global RenderListBox, BookmarkListBox, BookmarkItemCnt, BookmarkList
+    if RenderListBox.curselection() != None:
+        key = RenderList[RenderListBox.curselection()[0]]
+        BookmarkListBox.insert(BookmarkItemCnt, key)
+        BookmarkItemCnt += 1
+        BookmarkList.append(key)
+    #bookmark.Add()
 
 # 북마크 삭제 버튼
 def InitBookmarkDelButton():
     TempFont = font.Font(g_Tk, size=11, family=myFont)
     DetailButton = Button(g_Tk, font=TempFont, text="삭제", command=BookmarkDel,
                           relief='flat', background="white", width=10)
-    DetailButton.grid(row=1,column=4, columnspan=3)
+    DetailButton.grid(row=1,column=5)
 
 def BookmarkDel():
+    global BookmarkListBox
+    if BookmarkListBox.curselection() != None:
+        # key = BookmarkList[BookmarkListBox.curselection()[0]]
+        BookmarkListBox.delete(BookmarkListBox.curselection()[0], BookmarkListBox.curselection()[0])
     bookmark.Del()
 
 # 북마크 SAVE 버튼
@@ -274,7 +291,7 @@ def InitBookmarkSaveButton():
     TempFont = font.Font(g_Tk, size=11, family=myFont)
     DetailButton = Button(g_Tk, font=TempFont, text="SAVE", command=BookmarkSave,
                           relief='flat', background="white", width=10)
-    DetailButton.grid(row=1,column=5, columnspan=4)
+    DetailButton.grid(row=1,column=6)
 
 def BookmarkSave():
     bookmark.Save()
@@ -296,7 +313,7 @@ def InitSendEmailButton():
     RenderText.configure(state='normal')
     text = RenderText.get(0.0, END)
     SendEmailButton = Button(g_Tk, font=TempFont, text="SEND EMAIL", command=SendEmail,
-                          relief='flat', background="white", width=15)
+                          relief='flat', background="white", width=13)
     SendEmailButton.grid(row=2, column=5)
 
 def SendEmail():
