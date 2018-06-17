@@ -106,7 +106,7 @@ def ShowDetail():
                 image = item.find("image").text
                 photo = search_image.imageRead(image)
                 imageLabel.config(image=photo)
-                imageLabel.grid(row=2, column=10, rowspan=6, columnspan=2)
+                imageLabel.grid(row=10, column=5, rowspan=6, columnspan=2)
 
             if item.find("subtitle").text != None:
                 subtitle = item.find("subtitle").text
@@ -126,10 +126,8 @@ def ShowDetail():
                 RenderText.insert(INSERT, director)
                 RenderText.insert(INSERT, "\n")
 
-            #if item.find("actor") != None:
             if item.find("actor").text != None:
                 actor = item.find("actor").text
-            #if actor != None:
                 RenderText.insert(INSERT, "출연 배우: ")
                 RenderText.insert(INSERT, actor)
                 RenderText.insert(INSERT, "\n")
@@ -149,7 +147,6 @@ def ShowDetail():
             break
 
     RenderText.configure(state='disabled')
-
 
 # 장르 ↕
 def InitGenreComboBox():
@@ -175,7 +172,6 @@ def InitGenreComboBox():
     GenreComboBox.grid(row=2,column=0,columnspan=2)
     GenreComboBox.current(0)
 
-
 # 국가코드 ↕
 def InitCountryComboBox():
     global CountryComboBox
@@ -194,7 +190,7 @@ def InitCountryComboBox():
     CountryComboBox.grid(row=2,column=2,columnspan=2)
     CountryComboBox.current(0)
 
-# 리스트 창
+# 랜더 텍스트
 def InitRenderText():
     global RenderText
 
@@ -209,7 +205,7 @@ def InitRenderText():
     RenderTextScrollbar.config(command=RenderText.yview)
     RenderText.configure(state='disabled')
 
-# 북마크 타이틀
+# 리스트 박스
 def InitRenderListBox():
     global RederListBox
 
@@ -223,7 +219,28 @@ def InitRenderListBox():
                       yscrollcommand=RenderTextScrollbar.set)
     RederListBox.grid(row=3, column=0, rowspan=6, columnspan=4)
     RenderTextScrollbar.config(command=RederListBox.yview)
-    #RederListBox.configure(state='disabled')
+
+# 북마크 리스트 타이틀
+def InitBookmarkListText():
+    TempFont = font.Font(g_Tk, size=18, family=myFont)
+    MainText = Label(g_Tk, font=TempFont, text="북마크 리스트",
+                     relief='flat')
+    MainText.grid(row=9,column=0,columnspan=4)
+
+# 북마크 리스트 박스
+def InitBookmarkListBox():
+    global BookmarkListBox
+
+    RenderTextScrollbar = Scrollbar(g_Tk)
+    RenderTextScrollbar.grid(row=10, column=3)
+
+    TempFont = font.Font(g_Tk, size=10, family=myFont)
+    BookmarkListBox = Listbox(g_Tk, font=TempFont, activestyle='none',
+                           width=70, height=11, #borderwidth=12,
+                      relief='flat',
+                      yscrollcommand=RenderTextScrollbar.set)
+    BookmarkListBox.grid(row=10, column=0, rowspan=2, columnspan=4)
+    RenderTextScrollbar.config(command=BookmarkListBox.yview)
 
 # 북마크 타이틀
 def InitBookmarkText():
@@ -295,6 +312,8 @@ InitGenreComboBox()
 InitCountryComboBox()
 InitRenderText()
 InitRenderListBox()
+InitBookmarkListText()
+InitBookmarkListBox()
 InitBookmarkText()
 InitBookmarkAddButton()
 InitBookmarkDelButton()
