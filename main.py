@@ -17,7 +17,7 @@ myFont = 'KoPub돋움체 Medium'
 keyword = ''
 inputGenre = 0
 inputCountry = ''
-#photo = None
+photo = None
 
 imageLabel = Label(g_Tk, image=None)
 
@@ -82,7 +82,7 @@ def SearchKeyword():
 
 # 검색 상세 정보
 def ShowDetail():
-    global RederListBox, itemElements, RenderText, imageLabel
+    global RederListBox, itemElements, RenderText, imageLabel, photo
 
     RenderText.configure(state='normal')
     RenderText.delete(0.0, END)
@@ -101,15 +101,11 @@ def ShowDetail():
             RenderText.insert(INSERT, title)
             RenderText.insert(INSERT, "\n")
 
-            # # if item.find("image") != None:
-            # image = item.find("image").text
-            # print(type(image)) <class 'str'>
-            #
-            # photo = search_image.imageRead(image)
-            # print(type(photo)) <class 'PIL.ImageTk.PhotoImage'>
-            #
-            # imageLabel.config(image=photo)
-            # imageLabel.grid(row=2, column=10, rowspan=6, columnspan=2)
+            if item.find("image").text != None:
+                image = item.find("image").text
+                photo = search_image.imageRead(image)
+                imageLabel.config(image=photo)
+                imageLabel.grid(row=2, column=10, rowspan=6, columnspan=2)
 
             if item.find("subtitle").text != None:
                 subtitle = item.find("subtitle").text
