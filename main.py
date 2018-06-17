@@ -6,6 +6,7 @@ import search_internet
 import search_image
 import gmail
 import bookmark
+import spam
 
 g_Tk = Tk()
 #g_Tk.geometry("900x600+100+100") # width height x y
@@ -291,7 +292,11 @@ def InitBookmarkSaveButton():
     DetailButton.grid(row=1,column=6)
 
 def BookmarkSave():
-    bookmark.Save()
+    global BookmarkList
+    str = ''
+    for s in BookmarkList:
+        str += s + ' '
+    spam.save(str)
 
 # 북마크 LOAD 버튼
 def InitBookmarkLoadButton():
