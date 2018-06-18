@@ -51,7 +51,7 @@ def InitDetailButton():
     TempFont = font.Font(g_Tk, size=11, family=myFont)
     DetailButton = Button(g_Tk, font=TempFont, text="DETAIL", command=ShowDetail,
                           relief='flat', background="white", width=10)
-    DetailButton.grid(row=2,column=4)
+    DetailButton.grid(row=2,column=5)
 
 #검색 버튼 누른 후 동작
 def SearchButtonAction():
@@ -226,12 +226,12 @@ def InitRenderListBox():
     RenderListBox.grid(row=3, column=0, rowspan=6, columnspan=4)
     RenderTextScrollbar.config(command=RenderListBox.yview)
 
-# 북마크 리스트 타이틀
+# 북마크 타이틀
 def InitBookmarkListText():
     TempFont = font.Font(g_Tk, size=18, family=myFont)
-    MainText = Label(g_Tk, font=TempFont, text="북마크 리스트",
+    MainText = Label(g_Tk, font=TempFont, text="북마크",
                      relief='flat')
-    MainText.grid(row=9,column=0,columnspan=4)
+    MainText.grid(row=9,column=1)
 
 # 북마크 리스트 박스
 def InitBookmarkListBox():
@@ -248,19 +248,12 @@ def InitBookmarkListBox():
     BookmarkListBox.grid(row=10, column=0, rowspan=2, columnspan=4)
     RenderTextScrollbar.config(command=BookmarkListBox.yview)
 
-# 북마크 타이틀
-def InitBookmarkText():
-    TempFont = font.Font(g_Tk, size=18, family=myFont)
-    MainText = Label(g_Tk, font=TempFont, text="북마크",
-                     relief='flat')
-    MainText.grid(row=0,column=4,columnspan=4)
-
 # 북마크 추가 버튼
 def InitBookmarkAddButton():
     TempFont = font.Font(g_Tk, size=11, family=myFont)
     DetailButton = Button(g_Tk, font=TempFont, text="추가", command=BookmarkAdd,
-                          relief='flat', background="white", width=10)
-    DetailButton.grid(row=1,column=4)
+                          relief='flat', background="white", width=7)
+    DetailButton.grid(row=9,column=2,columnspan=2)
 
 def BookmarkAdd():
     global RenderListBox, BookmarkListBox, BookmarkItemCnt, BookmarkList
@@ -275,13 +268,15 @@ def BookmarkAdd():
 def InitBookmarkDelButton():
     TempFont = font.Font(g_Tk, size=11, family=myFont)
     DetailButton = Button(g_Tk, font=TempFont, text="삭제", command=BookmarkDel,
-                          relief='flat', background="white", width=10)
-    DetailButton.grid(row=1,column=5)
+                          relief='flat', background="white", width=7)
+    DetailButton.grid(row=9,column=3)
 
 def BookmarkDel():
-    global BookmarkListBox
+    global BookmarkListBox, cnt
     if BookmarkListBox.curselection() != None:
+        cnt = BookmarkListBox.curselection()[0]
         BookmarkListBox.delete(BookmarkListBox.curselection()[0], BookmarkListBox.curselection()[0])
+        del BookmarkList[cnt]
 
 # 이메일 버튼
 def InitSendEmailButton():
@@ -290,8 +285,8 @@ def InitSendEmailButton():
     RenderText.configure(state='normal')
     text = RenderText.get(0.0, END)
     SendEmailButton = Button(g_Tk, font=TempFont, text="SEND EMAIL", command=SendEmail,
-                          relief='flat', background="white", width=13)
-    SendEmailButton.grid(row=2, column=5)
+                          relief='flat', background="white", width=10)
+    SendEmailButton.grid(row=2, column=6)
 
 def SendEmail():
     gmail.SendEmail(RenderText.get(0.0, END))
@@ -308,7 +303,6 @@ InitRenderText()
 InitRenderListBox()
 InitBookmarkListText()
 InitBookmarkListBox()
-InitBookmarkText()
 InitBookmarkAddButton()
 InitBookmarkDelButton()
 InitSendEmailButton()
