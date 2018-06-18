@@ -14,4 +14,4 @@
 
 import spam
 
-spam.save("fuckkkkkk")
+spam.save("안녕하세요. 2018 스크립트 언어 최종 발표입니다.")

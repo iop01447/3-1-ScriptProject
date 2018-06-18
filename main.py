@@ -5,8 +5,6 @@ from tkinter import messagebox
 import search_internet
 import search_image
 import gmail
-import bookmark
-import spam
 
 g_Tk = Tk()
 #g_Tk.geometry("900x600+100+100") # width height x y
@@ -25,6 +23,7 @@ inputCountry = ''
 photo = None
 
 imageLabel = Label(g_Tk, image=None)
+
 
 # 타이틀
 def InitTopText():
@@ -284,30 +283,6 @@ def BookmarkDel():
     if BookmarkListBox.curselection() != None:
         BookmarkListBox.delete(BookmarkListBox.curselection()[0], BookmarkListBox.curselection()[0])
 
-# 북마크 SAVE 버튼
-def InitBookmarkSaveButton():
-    TempFont = font.Font(g_Tk, size=11, family=myFont)
-    DetailButton = Button(g_Tk, font=TempFont, text="SAVE", command=BookmarkSave,
-                          relief='flat', background="white", width=10)
-    DetailButton.grid(row=1,column=6)
-
-def BookmarkSave():
-    global BookmarkList
-    str = ''
-    for s in BookmarkList:
-        str += s + ' '
-    spam.save(str)
-
-# 북마크 LOAD 버튼
-def InitBookmarkLoadButton():
-    TempFont = font.Font(g_Tk, size=11, family=myFont)
-    DetailButton = Button(g_Tk, font=TempFont, text="LOAD", command=BookmarkLoad,
-                          relief='flat', background="white", width=10)
-    DetailButton.grid(row=1,column=7)
-
-def BookmarkLoad():
-    bookmark.Load()
-
 # 이메일 버튼
 def InitSendEmailButton():
     global RenderText
@@ -336,8 +311,6 @@ InitBookmarkListBox()
 InitBookmarkText()
 InitBookmarkAddButton()
 InitBookmarkDelButton()
-InitBookmarkSaveButton()
-InitBookmarkLoadButton()
 InitSendEmailButton()
 #InitSortListBox()
 #InitSortButton()
